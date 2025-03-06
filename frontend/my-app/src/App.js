@@ -7,6 +7,13 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+
+        {/* icons for Material UI */}
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        />
+
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
@@ -19,16 +26,17 @@ function App() {
         >
           Learn React
         </a>
+
         <div>
           <h1>Hello, React!</h1>
           <Hello />
         </div>
       </header>
 
-      <div>
-        <h1>Hello, React!</h1>
-        <Hello />
-      </div>
+        <div>
+          <h1>Hello, React!</h1>
+          <Hello />
+        </div>
 
     </div>
 
