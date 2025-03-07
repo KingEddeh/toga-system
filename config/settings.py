@@ -42,7 +42,10 @@ INSTALLED_APPS = [
     'rest_framework',
 
     #apps
-    'api',
+    'apps.api',
+    'apps.customer',
+    'apps.sales',
+    'apps.university_info',
 ]
 
 MIDDLEWARE = [
