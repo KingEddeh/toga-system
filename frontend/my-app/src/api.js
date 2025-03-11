@@ -4,7 +4,7 @@ const API_BASE_URL = 'http://127.0.0.1:8000'; // Django server URL
 
 export const getCustomers = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/customers/`);
+    const response = await axios.get(`${API_BASE_URL}/customers`);
     return response.data;
   } catch (error) {
     console.error('Error fetching customers:', error);

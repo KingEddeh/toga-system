@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'corsheaders',
 
     # apps
-    'apps.api',
     'apps.customer',
     'apps.sales',
     'apps.university_info',
@@ -134,8 +133,12 @@ STATICFILES_DIRS = [BASE_DIR / "static"]  # Global static folder
 STATIC_ROOT = BASE_DIR / "staticfiles"  # For production (collecting files)
 
 # CORS configuration
-CORS_ALLOWED_ORIGINS = [
+CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000",  # React frontend URL
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000",
 ]
 
 CORS_ALLOWED_METHODS = [
