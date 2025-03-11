@@ -38,10 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    #rest api
+    # libraries
     'rest_framework',
+    'corsheaders',
 
-    #apps
+    # apps
     'apps.api',
     'apps.customer',
     'apps.sales',
@@ -50,6 +51,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # libraries
+    'corsheaders.middleware.CorsMiddleware',
+    
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -129,6 +133,19 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]  # Global static folder
 STATIC_ROOT = BASE_DIR / "staticfiles"  # For production (collecting files)
 
+# CORS configuration
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # React frontend URL
+]
+
+CORS_ALLOWED_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
