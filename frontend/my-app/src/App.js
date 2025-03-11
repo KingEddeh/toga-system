@@ -1,6 +1,6 @@
 import { Box, Stack } from "@mui/material"
-import SideBar from './components/ui/SideBar';
-import Content from "./components/ui/Content";
+import SideBar from './components/SideBar';
+import Content from "./components/Content";
 
 function App() {
   return (

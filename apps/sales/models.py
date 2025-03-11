@@ -50,7 +50,7 @@ class Payment(models.Model):
         ('rejected', 'Rejected'),
     ]
     paid_amount = models.FloatField()
-    status = models.Choices(STATUS_CHOICES)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -67,7 +67,7 @@ class PaymentTransaction(models.Model):
         ('debit_card', 'Debit Card'),
         ('other', 'Other'),
     ]
-    method = models.Choices(payment_methods)
+    method = models.CharField(max_length=20, choices=payment_methods)
     amount = models.FloatField()
     proof = models.ImageField(upload_to='proofs/')
     created_at = models.DateTimeField(auto_now_add=True)

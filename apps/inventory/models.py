@@ -11,13 +11,13 @@ class InventoryTransaction(models.Model):
         ('TRANSFER', 'Transfer'),
         ('ADJUST', 'Adjustment'),
     ]
-    transaction_type = models.Choices(TRANSACTION_TYPES)
+    transaction_type = models.CharField(max_length=10, choices=TRANSACTION_TYPES)
     quantity = models.IntegerField()
     reference = models.CharField(max_length=200)
     notes = models.TextField()
 
 class Inventory(models.Model):
-    product = models.ForeignKey('Product', on_delete=models.CASCADE)
+    product = models.OneToOneField('Product', on_delete=models.CASCADE)
     current_stock = models.IntegerField()
     reorder_level = models.IntegerField()
     date_created = models.DateTimeField(auto_now_add=True)
@@ -44,7 +44,7 @@ class Category(models.Model):
         return self.name
     
 class Supplier(models.Model):
-    product = models.ManyToManyField('Product', related_name='categories')
+    product = models.ManyToManyField('Product', related_name='suppliers')
     name = models.CharField(max_length=200)
     contact_person = models.CharField(max_length=200)
     phone = models.CharField(max_length=200)
