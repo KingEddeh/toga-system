@@ -1,113 +1,102 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Divider from '@mui/material/Divider';
-import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
-import OrderIcon from '@mui/icons-material/Receipt';
-import PaymentIcon from '@mui/icons-material/Payment';
-import InventoryIcon from '@mui/icons-material/Inventory';
-import RentalIcon from '@mui/icons-material/Assignment';
-import UniversityIcon from '@mui/icons-material/School';
-import TrashIcon from '@mui/icons-material/Delete';
-import SpamIcon from '@mui/icons-material/Report';
-import { Grid2, Stack } from '@mui/material';
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
+import Box from "@mui/material/Box";
+import List from "@mui/material/List";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Divider from "@mui/material/Divider";
+import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
+import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
+import OrderIcon from "@mui/icons-material/Receipt";
+import PaymentIcon from "@mui/icons-material/Payment";
+import InventoryIcon from "@mui/icons-material/Inventory";
+import RentalIcon from "@mui/icons-material/Assignment";
+import UniversityIcon from "@mui/icons-material/School";
+import TrashIcon from "@mui/icons-material/Delete";
+import SpamIcon from "@mui/icons-material/Report";
+
+const menuItems = [
+  { text: "Reservations", icon: <PointOfSaleIcon />, path: "/reservations" },
+  { text: "Point of Sale", icon: <PointOfSaleIcon />, path: "/datatest" },
+  { text: "Orders", icon: <OrderIcon />, path: "/customerform" },
+  { text: "Payment", icon: <PaymentIcon />, path: "/datagridtest" },
+  { text: "Inventory", icon: <InventoryIcon />, path: "/inventory" },
+  { text: "Rental", icon: <RentalIcon />, path: "/rental" },
+  { text: "University Info", icon: <UniversityIcon />, path: "/university" },
+];
+
+const secondaryItems = [
+  { text: "Trash", icon: <TrashIcon />, path: "/trash" },
+  { text: "Test", icon: <SpamIcon />, path: "/test" },
+];
 
 export default function SideBar() {
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const [selectedIndex, setSelectedIndex] = useState(1);
 
-  const handleListItemClick = (event, index) => {
+  const handleListItemClick = (index) => {
     setSelectedIndex(index);
   };
 
   return (
-    <Box sx={{ width: '100%', height: '100vh', bgcolor: 'background.paper', p: 2, boxShadow: 3, flex: 1 }}>
-      <Stack direction='row' spacing={2} alignItems="center">
+    <Box
+      sx={{
+        width: "250",
+        height: "100vh",
+        bgcolor: "background.paper",
+        p: 2,
+        boxShadow: 3,
+        flex: 1,
+      }}
+    >
+      <Stack direction="row" spacing={2} alignItems="center">
         <img src="/logo.jpg" alt="logo" width={100} />
-        <Grid2 item flex={1}>
+        <Grid item flex={1}>
           <h1>COOP</h1>
           <p>Toga System</p>
-        </Grid2>
+        </Grid>
       </Stack>
       <Divider sx={{ mt: 2 }} />
-      <List component="nav" aria-label="main mailbox folders">
-        <ListItemButton
-          selected={selectedIndex === 0}
-          onClick={(event) => handleListItemClick(event, 0)}
-        >
-          <ListItemIcon>
-            <PointOfSaleIcon />
-          </ListItemIcon>
-          <ListItemText primary="Point of Sale" />
-        </ListItemButton>
-        <ListItemButton
-          selected={selectedIndex === 1}
-          onClick={(event) => handleListItemClick(event, 1)}
-        >
-          <ListItemIcon>
-            <OrderIcon />
-          </ListItemIcon>
-          <ListItemText primary="Orders" />
-        </ListItemButton>
-        <ListItemButton
-          selected={selectedIndex === 2}
-          onClick={(event) => handleListItemClick(event, 2)}
-        >
-          <ListItemIcon>
-            <PaymentIcon />
-          </ListItemIcon>
-          <ListItemText primary="Payment" />
-        </ListItemButton>
-        <ListItemButton
-          selected={selectedIndex === 3}
-          onClick={(event) => handleListItemClick(event, 3)}
-        >
-          <ListItemIcon>
-            <InventoryIcon />
-          </ListItemIcon>
-          <ListItemText primary="Inventory" />
-        </ListItemButton>
-        <ListItemButton
-          selected={selectedIndex === 4}
-          onClick={(event) => handleListItemClick(event, 4)}
-        >
-          <ListItemIcon>
-            <RentalIcon />
-          </ListItemIcon>
-          <ListItemText primary="Rental" />
-        </ListItemButton>
-        <ListItemButton
-          selected={selectedIndex === 5}
-          onClick={(event) => handleListItemClick(event, 5)}
-        >
-          <ListItemIcon>
-            <UniversityIcon />
-          </ListItemIcon>
-          <ListItemText primary="University info" />
-        </ListItemButton>
+      
+      {/* Main Menu */}
+      <List component="nav">
+        {menuItems.map((item, index) => (
+          <ListItemButton
+            key={index}
+            selected={selectedIndex === index}
+            onClick={() => handleListItemClick(index)}
+            component={NavLink}
+            to={item.path}
+            sx={{
+              "&.active": { bgcolor: "primary.light", color: "primary.contrastText" },
+            }}
+          >
+            <ListItemIcon>{item.icon}</ListItemIcon>
+            <ListItemText primary={item.text} />
+          </ListItemButton>
+        ))}
       </List>
+
       <Divider />
-      <List component="nav" aria-label="secondary mailbox folder">
-        <ListItemButton
-          selected={selectedIndex === 6}
-          onClick={(event) => handleListItemClick(event, 6)}
-        >
-          <ListItemIcon>
-            <TrashIcon />
-          </ListItemIcon>
-          <ListItemText primary="Trash" />
-        </ListItemButton>
-        <ListItemButton
-          selected={selectedIndex === 7}
-          onClick={(event) => handleListItemClick(event, 7)}
-        >
-          <ListItemIcon>
-            <SpamIcon />
-          </ListItemIcon>
-          <ListItemText primary="Spam" />
-        </ListItemButton>
+
+      {/* Secondary Menu */}
+      <List component="nav">
+        {secondaryItems.map((item, index) => (
+          <ListItemButton
+            key={index + menuItems.length}
+            selected={selectedIndex === index + menuItems.length}
+            onClick={() => handleListItemClick(index + menuItems.length)}
+            component={NavLink}
+            to={item.path}
+            sx={{
+              "&.active": { bgcolor: "secondary.light", color: "secondary.contrastText" },
+            }}
+          >
+            <ListItemIcon>{item.icon}</ListItemIcon>
+            <ListItemText primary={item.text} />
+          </ListItemButton>
+        ))}
       </List>
     </Box>
   );

@@ -1,6 +1,9 @@
 from rest_framework import serializers
 from .models import Customer, Measurement
 
+class ImportCustomerSerializer(serializers.Serializer):
+    file = serializers.FileField()
+
 class MeasurementSerializer(serializers.ModelSerializer):
     class Meta:
         model = Measurement
