@@ -5,9 +5,13 @@ class Customer(models.Model):
     middle_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
     suffix = models.CharField(max_length=200, blank=True, null=True)
+    course = models.CharField(max_length=200)
     phone = models.CharField(max_length=200)
     email = models.EmailField(max_length=200)
     gender = models.CharField(max_length=200)
+    length = models.FloatField()
+    height = models.FloatField()
+    size = models.CharField(max_length=200, blank=True, null=True)
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -15,6 +19,16 @@ class Customer(models.Model):
         if self.suffix:
             full_name += f" {self.suffix}"
         return full_name
+    
+    def save(self):
+        if self.length <= 42 and self.height <= 160:
+            self.size = "Small"
+        elif 43 <= self.length <= 48 and 161 <= self.height <= 175:
+            self.size = "Medium"
+        elif self.length >= 49 and self.height >= 176:
+            self.size = "Large"
+        else:
+            self.size = "Error"
 
 class Measurement(models.Model):
     customer = models.OneToOneField(Customer, on_delete=models.CASCADE, related_name='measurement')

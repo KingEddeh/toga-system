@@ -48,6 +48,8 @@ class ImportCustomerAPIView(APIView):
                     email=row['email'],
                     phone=row['phone'],
                     gender=row['gender'],
+                    height=row['height'],
+                    length=row['length'],
                 )
                 customers.append(customer)
             Customer.objects.bulk_create(customers)

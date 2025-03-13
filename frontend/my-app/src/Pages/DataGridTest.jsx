@@ -21,6 +21,9 @@ export default function App() {
     { field: 'email', headerName: 'Email', width: 200 },
     { field: 'phone', headerName: 'Phone', width: 150 },
     { field: 'gender', headerName: 'Gender', width: 100 },
+    { field: 'height', headerName: 'Height', width: 100 },
+    { field: 'length', headerName: 'Length', width: 100 },
+    { field: 'size', headerName: 'Size', width: 100 },
     ];
 
 
