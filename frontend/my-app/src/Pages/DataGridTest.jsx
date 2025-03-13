@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
+import Button from '@mui/material/Button';
 
 export default function App() {
   const [rows, setRows] = React.useState([]);
@@ -28,8 +29,9 @@ export default function App() {
 
 
   return (
-    <div style={{ height: 300, width: '100%' }}>
+    <div style={{ height: 600, width: '100%' }}>
       <DataGrid rows={rows} columns={columns} />
+      <Button variant="contained" color="success">Import</Button>
     </div>
   );
 }

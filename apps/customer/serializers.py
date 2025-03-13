@@ -10,7 +10,6 @@ class MeasurementSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class CustomerSerializer(serializers.ModelSerializer):
-    measurement = MeasurementSerializer(many=True, read_only=True)
     class Meta:
         model = Customer
         fields = '__all__'

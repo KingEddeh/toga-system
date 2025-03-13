@@ -16,7 +16,7 @@ class ImportCustomerAPIView(APIView):
         try:
             data = request.FILES
             serializer = self.serializer_class(data=data)
-            if not serializer.is_valid:
+            if not serializer.is_valid():  # Fixed: Added parentheses to call the method
                 return Response({
                     'status': False,
                     'message': 'Provide a valid file to import customers'
@@ -31,7 +31,8 @@ class ImportCustomerAPIView(APIView):
                     middle_name=row['middle_name'],
                     last_name=row['last_name'],
                 ).exists():
-                    Customer.objects.create(
+                    # Create a Customer instance but don't save it yet
+                    customer = Customer(
                         first_name=row['first_name'],
                         middle_name=row['middle_name'],
                         last_name=row['last_name'],
@@ -39,19 +40,14 @@ class ImportCustomerAPIView(APIView):
                         email=row['email'],
                         phone=row['phone'],
                         gender=row['gender'],
+                        height=row['height'],
+                        length=row['length'],
                     )
-                customer = Customer(
-                    first_name=row['first_name'],
-                    middle_name=row['middle_name'],
-                    last_name=row['last_name'],
-                    suffix=row.get('suffix', ''),
-                    email=row['email'],
-                    phone=row['phone'],
-                    gender=row['gender'],
-                    height=row['height'],
-                    length=row['length'],
-                )
-                customers.append(customer)
+                    # Set the size manually since bulk_create doesn't call save()
+                    customer._set_size()
+                    customers.append(customer)
+            
+            # Only create the customers once
             Customer.objects.bulk_create(customers)
             return Response({
                 'status': True,
@@ -62,7 +58,6 @@ class ImportCustomerAPIView(APIView):
                 'status': False,
                 'message': str(e),
             }, status=status.HTTP_400_BAD_REQUEST)
-    
 
 class CustomerViewSet(viewsets.ModelViewSet):
     queryset = Customer.objects.all()

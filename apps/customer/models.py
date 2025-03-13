@@ -13,14 +13,14 @@ class Customer(models.Model):
     height = models.FloatField()
     size = models.CharField(max_length=200, blank=True, null=True)
     date_created = models.DateTimeField(auto_now_add=True)
-
+    
     def __str__(self):
         full_name = f"{self.first_name} {self.middle_name} {self.last_name}"
         if self.suffix:
             full_name += f" {self.suffix}"
         return full_name
-    
-    def save(self):
+   
+    def _set_size(self):
         if self.length <= 42 and self.height <= 160:
             self.size = "Small"
         elif 43 <= self.length <= 48 and 161 <= self.height <= 175:
@@ -29,6 +29,10 @@ class Customer(models.Model):
             self.size = "Large"
         else:
             self.size = "Error"
+   
+    def save(self, *args, **kwargs):
+        self._set_size()  # Set the size before saving
+        super().save(*args, **kwargs)  # Call the "real" save() method
 
 class Measurement(models.Model):
     customer = models.OneToOneField(Customer, on_delete=models.CASCADE, related_name='measurement')
