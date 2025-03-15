@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.parsers import MultiPartParser, FormParser
 import pandas as pandas
+from django.db.models import Q
 
 class ImportCustomerAPIView(APIView):
     serializer_class = ImportCustomerSerializer
@@ -16,7 +17,7 @@ class ImportCustomerAPIView(APIView):
         try:
             data = request.FILES
             serializer = self.serializer_class(data=data)
-            if not serializer.is_valid():  # Fixed: Added parentheses to call the method
+            if not serializer.is_valid():
                 return Response({
                     'status': False,
                     'message': 'Provide a valid file to import customers'
@@ -26,12 +27,8 @@ class ImportCustomerAPIView(APIView):
             customers = []
             for _, row in df.iterrows():
                 if not Customer.objects.filter(
-                    email=row['email'],
-                    first_name=row['first_name'],
-                    middle_name=row['middle_name'],
-                    last_name=row['last_name'],
+                    (Q(email=row['email']) | Q(phone=row['phone']) | (Q(first_name=row['first_name']) & Q(last_name=row['last_name']) & Q(middle_name=row['middle_name'])))
                 ).exists():
-                    # Create a Customer instance but don't save it yet
                     customer = Customer(
                         first_name=row['first_name'],
                         middle_name=row['middle_name'],
@@ -43,11 +40,8 @@ class ImportCustomerAPIView(APIView):
                         height=row['height'],
                         length=row['length'],
                     )
-                    # Set the size manually since bulk_create doesn't call save()
                     customer._set_size()
                     customers.append(customer)
-            
-            # Only create the customers once
             Customer.objects.bulk_create(customers)
             return Response({
                 'status': True,

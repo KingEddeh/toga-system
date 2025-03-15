@@ -1,18 +1,26 @@
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import Button from '@mui/material/Button';
+import FileUpload from '../components/FileUpload';
+
+const fetchCustomers = async (setRows) => {
+  try {
+    const response = await fetch("http://127.0.0.1:8000/customer/customers");
+    if (!response.ok) {
+      throw new Error("Failed to fetch data");
+    }
+    const data = await response.json();
+    setRows(data);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};
 
 export default function App() {
-  const [rows, setRows] = React.useState([]);
+  const [rows, setRows] = useState([]);
 
-  React.useEffect(() => {
-    // Replace with your actual API endpoint
-    fetch('http://127.0.0.1:8000/customer/customers')
-      .then((response) => response.json())
-      .then((data) => {setRows(data);
-      })
-      .catch((error) => console.error('Error fetching data:', error));
-  }, []); // Runs once on component mount
+  useEffect(() => {
+    fetchCustomers(setRows)
+  }, []);
 
   const columns = [
     { field: 'first_name', headerName: 'First Name', width: 150 },
@@ -31,7 +39,7 @@ export default function App() {
   return (
     <div style={{ height: 600, width: '100%' }}>
       <DataGrid rows={rows} columns={columns} />
-      <Button variant="contained" color="success">Import</Button>
+      <FileUpload onUploadSuccess={fetchCustomers} />
     </div>
   );
 }

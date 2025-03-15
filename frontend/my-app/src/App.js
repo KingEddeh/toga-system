@@ -8,7 +8,7 @@ import DataGridTest from './Pages/DataGridTest.jsx'
 
 function Layout() {
   return (
-    <Box sx={{ height: "100vh", display: "flex" }}>
+    <Box sx={{ height: "100vh", width:"100%", display: "flex" }}>
       {/* Sidebar with fixed width */}
       <Box sx={{ width: 250, flexShrink: 0 }}>
         <SideBar />
