@@ -1,30 +1,23 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
+
+
+
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
-import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
-import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
-import OrderIcon from "@mui/icons-material/Receipt";
 import PaymentIcon from "@mui/icons-material/Payment";
-import InventoryIcon from "@mui/icons-material/Inventory";
-import RentalIcon from "@mui/icons-material/Assignment";
-import UniversityIcon from "@mui/icons-material/School";
 import TrashIcon from "@mui/icons-material/Delete";
 import SpamIcon from "@mui/icons-material/Report";
 
 const menuItems = [
-  { text: "Reservations", icon: <PointOfSaleIcon />, path: "/reservations" },
-  { text: "Point of Sale", icon: <PointOfSaleIcon />, path: "/datatest" },
-  { text: "Orders", icon: <OrderIcon />, path: "/customerform" },
-  { text: "Payment", icon: <PaymentIcon />, path: "/datagridtest" },
-  { text: "Inventory", icon: <InventoryIcon />, path: "/inventory" },
-  { text: "Rental", icon: <RentalIcon />, path: "/rental" },
-  { text: "University Info", icon: <UniversityIcon />, path: "/university" },
+  { text: "Dashboard", icon: <PaymentIcon />, path: "/" },
+  { text: "POS", icon: <PaymentIcon />, path: "/pointofsale" },
+  { text: "Toga", icon: <PaymentIcon />, path: "/togareservation" },
 ];
 
 const secondaryItems = [
@@ -40,26 +33,29 @@ export default function SideBar() {
   };
 
   return (
-    <Box
-      sx={{
-        width: "250",
-        height: "100vh",
-        bgcolor: "background.paper",
-        p: 2,
-        boxShadow: 3,
-        flex: 1,
-      }}
-    >
-      <Stack direction="row" spacing={2} alignItems="center">
+    <Box>
+
+      <Stack
+        component={Link}
+        to="/"
+        direction="row"
+        spacing={2}
+        alignItems="center"
+        sx={{
+          textDecoration: "none",
+          color: "inherit",
+          cursor: "pointer",
+          "&:hover": { backgroundColor: "transparent", color: "inherit" } // Prevent hover effects
+        }}
+      >
         <img src="/logo.jpg" alt="logo" width={100} />
-        <Grid item flex={1}>
+        <Box flex={1}>
           <h1>COOP</h1>
           <p>Toga System</p>
-        </Grid>
+        </Box>
       </Stack>
       <Divider sx={{ mt: 2 }} />
       
-      {/* Main Menu */}
       <List component="nav">
         {menuItems.map((item, index) => (
           <ListItemButton

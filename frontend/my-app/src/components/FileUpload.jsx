@@ -39,7 +39,7 @@ const FileUpload = ({ onUploadSuccess }) => {
   };
 
   return (
-    <Box display="flex" gap={2} alignItems="center">
+    <Box margin={2}>
       <input type="file" onChange={handleFileChange} />
       <Button variant="contained" color="primary" onClick={handleUpload}>
         Upload File

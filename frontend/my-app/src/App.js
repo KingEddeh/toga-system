@@ -1,42 +1,52 @@
-import { Box } from "@mui/material"
 import SideBar from './components/SideBar';
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
-import CreateOrderForm from './Pages/CreateOrderForm.jsx'
-import DataTest from './Pages/DataTest.jsx'
-import CustomerForm from './Pages/CustomerForm.jsx'
-import DataGridTest from './Pages/DataGridTest.jsx'
+import TogaReservation from './Pages/TogaReservation.jsx'
+import Dashboard from "./Pages/Dashboard.jsx";
+import PointOfSale from "./Pages/PointOfSale.jsx";
+import Grid from "@mui/material/Grid2";
 
 function Layout() {
   return (
-    <Box sx={{ height: "100vh", width:"100%", display: "flex" }}>
-      {/* Sidebar with fixed width */}
-      <Box sx={{ width: 250, flexShrink: 0 }}>
+    <Grid container sx={{ height: "100vh" }}>
+      <Grid
+        size={2}
+        sx={{
+          height: "100vh",
+          position: "sticky",
+          top: 0,
+          padding: 2,
+          borderRight: 1, 
+          borderColor: "divider", 
+        }}
+      > 
         <SideBar />
-      </Box>
+      </Grid>
 
-      {/* Main Content (Outlet) fills remaining space */}
-      <Box sx={{ flexGrow: 1, p: 2 }}>
+      <Grid
+        size={10}
+        sx={{
+          overflowY: "auto",
+          padding: 3,
+          height: "100vh",
+        }}
+      >
         <Outlet />
-      </Box>
-    </Box>
+      </Grid>
+    </Grid>
   );
 }
 
-
-function App() {
+export default function App() {
   return (
     <BrowserRouter>
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route index element={<CreateOrderForm />} />
-        <Route path="datatest" element={<DataTest />} />
-        <Route path="customerform" element={<CustomerForm />} />
-        <Route path="datagridtest" element={<DataGridTest />} />
+        <Route index element={<Dashboard />} />
+        <Route path="pointofsale" element={<PointOfSale />} />
+        <Route path="togareservation" element={<TogaReservation />} />
 
       </Route>
     </Routes>
   </BrowserRouter>
   );
 }
-
-export default App;
