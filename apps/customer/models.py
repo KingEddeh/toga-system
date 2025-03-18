@@ -1,16 +1,17 @@
 from django.db import models
 
 class Customer(models.Model):
-    first_name = models.CharField(max_length=200)
-    middle_name = models.CharField(max_length=200)
-    last_name = models.CharField(max_length=200)
-    suffix = models.CharField(max_length=200, blank=True, null=True)
+    first_name = models.CharField(max_length=50)
+    middle_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    suffix = models.CharField(max_length=50, blank=True, null=True)
+    full_name = models.CharField(max_length=200, blank=True, null=True)
     course = models.CharField(max_length=200)
-    phone = models.CharField(max_length=200)
-    email = models.EmailField(max_length=200)
+    phone = models.CharField(max_length=200, blank=True, null=True)
+    email = models.EmailField(max_length=200, blank=True, null=True)
     gender = models.CharField(max_length=200)
-    length = models.FloatField()
-    height = models.FloatField()
+    shoulder_length = models.CharField(max_length=3, default='0', blank=True, null=True)
+    height = models.CharField(max_length=3, default='0', blank=True, null=True)
     size = models.CharField(max_length=200, blank=True, null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     
@@ -21,18 +22,25 @@ class Customer(models.Model):
         return full_name
    
     def _set_size(self):
-        if self.length <= 42 and self.height <= 160:
+        if self.shoulder_length <= 42 and self.height <= 160:
             self.size = "Small"
-        elif 43 <= self.length <= 48 and 161 <= self.height <= 175:
+        elif 43 <= self.shoulder_length <= 48 and 161 <= self.height <= 175:
             self.size = "Medium"
-        elif self.length >= 49 and self.height >= 176:
+        elif self.shoulder_length >= 49 and self.height >= 176:
             self.size = "Large"
         else:
             self.size = "Error"
+
+    def _set_full_name(self):
+        self.full_name = f"{self.first_name} {self.middle_name} {self.last_name}"
+        if self.suffix:
+            full_name += f" {self.suffix}"
+        return self.full_name
    
     def save(self, *args, **kwargs):
-        self._set_size()  # Set the size before saving
-        super().save(*args, **kwargs)  # Call the "real" save() method
+        self._set_size()
+        self._set_full_name()
+        super().save(*args, **kwargs)
 
 class Measurement(models.Model):
     customer = models.OneToOneField(Customer, on_delete=models.CASCADE, related_name='measurement')

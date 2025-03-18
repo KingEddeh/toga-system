@@ -1,6 +1,6 @@
 import SideBar from './components/SideBar';
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
-import TogaReservation from './Pages/TogaReservation.jsx'
+import Customers from './Pages/Customers.jsx'
 import Dashboard from "./Pages/Dashboard.jsx";
 import PointOfSale from "./Pages/PointOfSale.jsx";
 import Grid from "@mui/material/Grid2";
@@ -43,7 +43,7 @@ export default function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<Dashboard />} />
         <Route path="pointofsale" element={<PointOfSale />} />
-        <Route path="togareservation" element={<TogaReservation />} />
+        <Route path="customers" element={<Customers />} />
 
       </Route>
     </Routes>

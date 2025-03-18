@@ -17,7 +17,7 @@ import SpamIcon from "@mui/icons-material/Report";
 const menuItems = [
   { text: "Dashboard", icon: <PaymentIcon />, path: "/" },
   { text: "POS", icon: <PaymentIcon />, path: "/pointofsale" },
-  { text: "Toga", icon: <PaymentIcon />, path: "/togareservation" },
+  { text: "Customers", icon: <PaymentIcon />, path: "/customers" },
 ];
 
 const secondaryItems = [

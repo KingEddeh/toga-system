@@ -1,26 +1,28 @@
 import { useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
-import FileUpload from '../components/FileUpload';
+import axios from 'axios';
 
-export default function TogaReservation() {
-  const [rows, setRows] = useState([]);
+import FileUpload from '../components/FileUpload'
 
-  const fetchCustomers = async (setRows) => {
+export default function Customers() {
+  const [dataRows, setDataRows] = useState([]);
+
+  const getCustomers = async (setDataRows) => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/customer/customers");
+      const response = await axios.get("http://127.0.0.1:8000/customer/customers");
       if (!response.ok) {
-        throw new Error("Failed to fetch data");
+        throw new Error("Failed to get data");
       }
       const data = await response.json();
-      setRows(data);
+      setDataRows(data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
   useEffect(() => {
-    fetchCustomers(setRows)
+    getCustomers(setDataRows)
   }, []);
 
   const columns = [
@@ -31,8 +33,8 @@ export default function TogaReservation() {
     { field: 'email', headerName: 'Email', flex:2 },
     { field: 'phone', headerName: 'Phone', flex:2 },
     { field: 'gender', headerName: 'Gender', flex:1 },
-    { field: 'height', headerName: 'Height', flex:1 },
-    { field: 'length', headerName: 'Length', flex:1 },
+    { field: 'height', headerName: "Height (ft'in)", flex:1 },
+    { field: 'shoulder_length', headerName: 'Shoulder Length (in)', flex:1 },
     { field: 'size', headerName: 'Size', flex:1 },
     ];
 
@@ -41,11 +43,11 @@ export default function TogaReservation() {
     <Box width="100%">
       <h1>Toga Reservations</h1>
       <DataGrid 
-        rows={rows} 
+        rows={dataRows} 
         columns={columns} 
         sx={{height: "500px", overflowX: true}}
       />
-      <FileUpload onUploadSuccess={() => fetchCustomers(setRows)} />
+      <FileUpload onUploadSuccess={() => getCustomers(setDataRows)} />
     </Box>
   );
 }

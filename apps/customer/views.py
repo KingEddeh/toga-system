@@ -38,9 +38,10 @@ class ImportCustomerAPIView(APIView):
                         phone=row['phone'],
                         gender=row['gender'],
                         height=row['height'],
-                        length=row['length'],
+                        shoulder_length=row['length'],
                     )
                     customer._set_size()
+                    customer._set_full_name()
                     customers.append(customer)
             Customer.objects.bulk_create(customers)
             return Response({
