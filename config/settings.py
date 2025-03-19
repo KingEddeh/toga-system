@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     # libraries
     'rest_framework',
+    'rest_framework_simplejwt',
     'corsheaders',
 
     # apps
@@ -47,7 +48,14 @@ INSTALLED_APPS = [
     'apps.sales',
     'apps.university_info',
     'apps.inventory',
+    'apps.users',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
 
 MIDDLEWARE = [
     # libraries
@@ -134,6 +142,10 @@ STATIC_ROOT = BASE_DIR / "staticfiles"  # For production (collecting files)
 
 # CORS configuration
 CORS_ORIGIN_WHITELIST = [
+    "http://localhost:3000",  # React frontend URL
+]
+
+CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # React frontend URL
 ]
 

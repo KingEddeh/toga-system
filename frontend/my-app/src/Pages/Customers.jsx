@@ -4,26 +4,15 @@ import { DataGrid } from '@mui/x-data-grid';
 import axios from 'axios';
 
 import FileUpload from '../components/FileUpload'
+import { getCustomers } from '../api';
 
 export default function Customers() {
   const [dataRows, setDataRows] = useState([]);
-
-  const getCustomers = async (setDataRows) => {
-    try {
-      const response = await axios.get("http://127.0.0.1:8000/customer/customers");
-      if (!response.ok) {
-        throw new Error("Failed to get data");
-      }
-      const data = await response.json();
-      setDataRows(data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     getCustomers(setDataRows)
-  }, []);
+  }, [refresh]);
 
   const columns = [
     { field: 'first_name', headerName: 'First Name', flex:1 },
@@ -47,7 +36,7 @@ export default function Customers() {
         columns={columns} 
         sx={{height: "500px", overflowX: true}}
       />
-      <FileUpload onUploadSuccess={() => getCustomers(setDataRows)} />
+      <FileUpload onUploadSuccess={() => setRefresh(prev => !prev)} />
     </Box>
   );
 }
